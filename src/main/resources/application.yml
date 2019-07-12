@@ -1,1 +1,38 @@
-
+server:
+  port: 9983
+#logging:
+#  level:
+#    root: debug
+http:
+  max-total: 100
+  default-max-per-route: 20
+  connect-timeout: 3000
+  connection-request-timeout: 500
+  socket-timeout: 5000
+  validate-after-inactivity: 1000
+  wait-time: 5000
+  idle-con-time: 5000
+scheduler:
+  pool-size: 20
+solr:
+  cores[0]:
+    server-ip: 192.168.3.10
+    server-port: 8983
+#    username: admin
+#    password: admin
+    core-name: meta_db
+    import-interval: 15
+    # /dataimport?command=delta-import&clean=false&commit=true
+    import-param:
+      name: dataimport
+      command: delta-import
+      verbose: false
+      clean: false
+      commit: true
+    re-index-interval: 0
+    re-index-params: /select?qt=/dataimport&command=full-import&clean=true&commit=true
+#  cores[1]:
+#    server-ip: 192.168.3.10
+#    server-port: 8983
+#    core-name: meta-db2
+#    import-interval: 15
