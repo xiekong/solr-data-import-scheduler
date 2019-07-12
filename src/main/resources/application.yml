@@ -32,7 +32,8 @@ solr:
       clean: false
       commit: true
     re-index-interval: 0
-    re-index-params: /select?qt=/dataimport&command=full-import&clean=true&commit=true
+    # /select?qt=/dataimport&command=full-import&clean=true&commit=true
+#    re-index-param:
 #  cores[1]:
 #    server-ip: 192.168.3.10
 #    server-port: 8983
