@@ -35,7 +35,7 @@ public class HttpClientConfig {
      * @return
      */
     @Bean(name = "httpClientConnectionManager")
-    public PoolingHttpClientConnectionManager getHttpClientConnectionManager() {
+    public PoolingHttpClientConnectionManager httpClientConnectionManager() {
         PoolingHttpClientConnectionManager httpClientConnectionManager = new PoolingHttpClientConnectionManager();
         //最大连接数
         httpClientConnectionManager.setMaxTotal(maxTotal);
@@ -54,7 +54,7 @@ public class HttpClientConfig {
      * @return
      */
     @Bean(name = "httpClientBuilder")
-    public HttpClientBuilder getHttpClientBuilder(@Qualifier("httpClientConnectionManager") PoolingHttpClientConnectionManager httpClientConnectionManager) {
+    public HttpClientBuilder httpClientBuilder(@Qualifier("httpClientConnectionManager") PoolingHttpClientConnectionManager httpClientConnectionManager) {
         //HttpClientBuilder中的构造方法被protected修饰，
         // 所以这里不能直接使用new来实例化一个HttpClientBuilder，
         // 可以使用HttpClientBuilder提供的静态方法create()来获取HttpClientBuilder对象
@@ -70,7 +70,7 @@ public class HttpClientConfig {
      * @return
      */
     @Bean
-    public CloseableHttpClient getCloseableHttpClient(@Qualifier("httpClientBuilder") HttpClientBuilder httpClientBuilder) {
+    public CloseableHttpClient closeableHttpClient(@Qualifier("httpClientBuilder") HttpClientBuilder httpClientBuilder) {
         return httpClientBuilder.build();
     }
 
@@ -101,12 +101,12 @@ public class HttpClientConfig {
      * @return
      */
     @Bean
-    public RequestConfig getRequestConfig(@Qualifier("builder") RequestConfig.Builder builder) {
+    public RequestConfig requestConfig(@Qualifier("builder") RequestConfig.Builder builder) {
         return builder.build();
     }
 
     @Bean
-    public IdleConnectionEvictor createIdleConnectionEvictor(PoolingHttpClientConnectionManager poolManager) {
+    public IdleConnectionEvictor idleConnectionEvictor(PoolingHttpClientConnectionManager poolManager) {
         return new IdleConnectionEvictor(poolManager, waitTime, idleConTime);
     }
 }
